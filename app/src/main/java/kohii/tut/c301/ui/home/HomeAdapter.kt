@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import kohii.tut.c301.R
+import kohii.v1.core.Common
 import kohii.v1.exoplayer.Kohii
 
 class HomeAdapter(
@@ -21,6 +22,8 @@ class HomeAdapter(
     val videoItem = VideoItem(position = position)
     kohii.setUp(videoItem.videoUrl) {
       tag = "${videoItem.videoUrl}+${position}"
+      preload = true
+      repeatMode = Common.REPEAT_MODE_ONE
     }.bind(holder.playerView)
   }
 }

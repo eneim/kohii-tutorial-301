@@ -12,3 +12,7 @@
 /captures
 .externalNativeBuild
 .cxx
+/.idea/
+/app/.gitignore
+/app/src/androidTest/
+/app/src/test/

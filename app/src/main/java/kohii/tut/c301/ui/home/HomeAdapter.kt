@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import kohii.tut.c301.R
 import kohii.v1.core.Common
+import kohii.v1.core.Playback
+import kohii.v1.core.Playback.Controller
 import kohii.v1.exoplayer.Kohii
 
 class HomeAdapter(
@@ -24,6 +26,24 @@ class HomeAdapter(
       tag = "${videoItem.videoUrl}+${position}"
       preload = true
       repeatMode = Common.REPEAT_MODE_ONE
+      controller = object : Controller {
+        override fun kohiiCanStart(): Boolean = true
+        override fun kohiiCanPause(): Boolean = true
+        override fun setupRenderer(playback: Playback, renderer: Any?) {
+          holder.playerContainer.setOnClickListener {
+            val playable = playback.playable ?: return@setOnClickListener
+            if (playable.isPlaying()) {
+              playback.manager.pause(playable)
+            } else {
+              playback.manager.play(playable)
+            }
+          }
+        }
+
+        override fun teardownRenderer(playback: Playback, renderer: Any?) {
+          playback.container.setOnClickListener(null)
+        }
+      }
     }.bind(holder.playerView)
   }
 }

@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     android:layout_margin="4dp"
     android:background="@color/colorAccent"
+    android:clickable="true"
+    android:focusable="true"
     >
 
   <com.google.android.exoplayer2.ui.PlayerView

@@ -1,30 +1,22 @@
 package kohii.tut.c301.ui.home
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.widget.ViewPager2
 import kohii.tut.c301.R
+import kohii.v1.exoplayer.Kohii
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(R.layout.fragment_home) {
 
-  private lateinit var homeViewModel: HomeViewModel
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    val kohii = Kohii[this]
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
-    homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-    val root = inflater.inflate(R.layout.fragment_home, container, false)
-    val textView: TextView = root.findViewById(R.id.text_home)
-    homeViewModel.text.observe(viewLifecycleOwner, Observer {
-      textView.text = it
-    })
-    return root
+    val pager: ViewPager2 = view.findViewById(R.id.container)
+    kohii.register(this).addBucket(pager)
+
+    val adapter = HomeAdapter(kohii)
+    pager.adapter = adapter
   }
 }

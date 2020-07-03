@@ -41,7 +41,7 @@ class HomeAdapter(
         }
 
         override fun teardownRenderer(playback: Playback, renderer: Any?) {
-          playback.container.setOnClickListener(null)
+          holder.playerContainer.setOnClickListener(null)
         }
       }
     }.bind(holder.playerView)
